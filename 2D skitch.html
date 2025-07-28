@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCCGLab Molecule Sketcher</title>
+  <script src="https://cdn.jsdelivr.net/npm/kekule/dist/kekule.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kekule/dist/themes/default/kekule.css">
+  <!-- Using Inter for a more modern, professional look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* General body styling for a clean, scientific aesthetic */
+    body {
+      background: #0a0a0a; /* Very dark background */
+      color: #e0e0e0; /* Light grey for primary text */
+      font-family: 'Inter', sans-serif; /* Professional sans-serif font */
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: auto; /* Allow scrolling if content overflows */
+    }
+
+    /* Container for the main content, with a subtle scientific border */
+    .scientific-container {
+      background: rgba(15, 25, 35, 0.9); /* Darker, slightly blue-tinted background */
+      border: 1px solid #00c0ff; /* Scientific blue border */
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 192, 255, 0.4); /* Blue glow */
+      padding: 2.5rem;
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      margin: 2rem auto; /* Center with margin for responsiveness */
+    }
+
+    /* Header text styling */
+    .header-text h1 {
+      font-family: 'Orbitron', sans-serif; /* Keep Orbitron for headings for a techy feel */
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #00f7ff; /* Bright cyan for emphasis */
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 15px rgba(0, 247, 255, 0.6);
+    }
+
+    .header-text p {
+      font-size: 1.1rem;
+      color: #a0e0ff; /* Lighter blue for descriptive text */
+      margin-bottom: 1rem; /* Reduced margin for the shortened text */
+      line-height: 1.5;
+    }
+
+    /* Live time display styling */
+    #live-time {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      color: #00f7ff;
+      margin-top: 0.5rem;
+      display: block;
+      text-shadow: 0 0 5px rgba(0, 247, 255, 0.5);
+    }
+
+    /* Kekule editor container */
+    #chem-editor {
+      width: 100%;
+      height: 550px; /* Slightly increased height for better drawing space */
+      border: 1px solid #00aaff; /* Blue border for the editor */
+      border-radius: 8px;
+      overflow: hidden; /* Ensure Kekule.js fits well */
+      background-color: #1a1a1a; /* Dark background for the editor area */
+    }
+
+    /* Button styling for a sleek, functional look */
+    button {
+      /* Increased contrast for better visibility */
+      background: linear-gradient(90deg, #00b0ff, #007bff); /* Brighter blue gradient */
+      color: #ffffff; /* White text */
+      padding: 0.9rem 2rem; /* Slightly larger padding */
+      border-radius: 8px; /* More rounded */
+      font-weight: 700; /* Bolder font */
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 25px rgba(0, 176, 255, 0.5); /* Stronger shadow */
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em; /* Increased letter spacing */
+      font-size: 1.05rem; /* Slightly larger font size */
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #007bff, #00b0ff); /* Invert gradient on hover */
+      box-shadow: 0 10px 30px rgba(0, 176, 255, 0.8); /* Even stronger shadow on hover */
+      transform: translateY(-4px); /* More pronounced lift */
+    }
+
+    /* SMILES output container - designed as a console output */
+    #smiles-container {
+      background: #1e1e1e; /* Dark grey for console background */
+      border: 1px solid #00aaff; /* Blue border */
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+      word-break: break-all;
+      text-align: left; /* Align text to the left like a console */
+      box-shadow: inset 0 0 10px rgba(0, 170, 255, 0.2); /* Inner glow */
+    }
+
+    #smiles-output {
+      color: #00f7ff; /* Bright cyan for output text */
+      font-family: 'Consolas', 'Monaco', monospace; /* Monospace font for code */
+      font-size: 1rem;
+      white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    }
+
+    /* Loading bar styles */
+    .loading-bar-container {
+      width: 100%;
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 2rem;
+      height: 30px; /* Height of the loading bar */
+      box-shadow: 0 0 15px rgba(0, 192, 255, 0.3);
+      position: relative;
+      display: none; /* Hidden by default */
+      display: flex; /* Use flexbox for cubes */
+      justify-content: flex-start;
+      align-items: center;
+      padding: 2px; /* Padding to show cube borders */
+      gap: 2px; /* Gap between cubes */
+    }
+
+    .loading-cube {
+      flex-grow: 1; /* Cubes will grow to fill space */
+      height: 100%;
+      background-color: #444; /* Default dark state */
+      border-radius: 4px; /* Slightly rounded cubes */
+      transition: background-color 0.3s ease-in-out; /* Smooth transition for color change */
+    }
+
+    .loading-cube.filled {
+      background: linear-gradient(45deg, #00c0ff, #007bff); /* Blue gradient for filled cubes */
+      box-shadow: 0 0 8px rgba(0, 192, 255, 0.6); /* Glow for filled cubes */
+    }
+
+    .loading-percentage {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: #e0e0e0; /* Light text for percentage */
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      z-index: 1; /* Ensure percentage is above the bar */
+      pointer-events: none; /* Allow clicks to pass through */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .scientific-container { padding: 1.5rem; margin: 1rem auto; }
+      .header-text h1 { font-size: 2rem; }
+      .header-text p { font-size: 0.9rem; }
+      #chem-editor { height: 400px; }
+      button { padding: 0.7rem 1.4rem; font-size: 0.9rem; }
+      #smiles-output { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scientific-container">
+    <div class="header-text">
+      <h1 id="sketcher-title">TCCG Sketcher</h1>
+      <p>using Kekule.js-powered tool for 2D molecular drawing and SMILES generation,save as other topology files.</p>
+      <span id="live-time"></span>
+    </div>
+
+    <div id="chem-editor"></div>
+
+    <div class="mt-8 flex gap-4 flex-wrap justify-center">
+      <button onclick="getSmiles()">Generate SMILES</button>
+      <button onclick="clearEditor()">Clear Canvas</button>
+    </div>
+
+    <!-- Loading Bar Container -->
+    <div id="loading-bar-container" class="loading-bar-container">
+      <!-- Cubes will be dynamically added here by JavaScript -->
+      <span id="loading-percentage" class="loading-percentage">0%</span>
+    </div>
+
+    <div id="smiles-container">
+      <code id="smiles-output">SMILES string will be displayed here upon generation.</code>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Kekule editor
+    const editor = new Kekule.Editor.Composer(document.getElementById('chem-editor'));
+    editor.setPredefinedSetting('fullFunc');
+    editor.setChemObj(new Kekule.StructureFragment());
+
+    const NUM_CUBES = 20; // Number of "cubes" in the loading bar
+
+    // Function to create loading cubes
+    function createLoadingCubes() {
+      const container = document.getElementById('loading-bar-container');
+      container.innerHTML = ''; // Clear existing content
+      for (let i = 0; i < NUM_CUBES; i++) {
+        const cube = document.createElement('div');
+        cube.classList.add('loading-cube');
+        container.appendChild(cube);
+      }
+      const percentageSpan = document.createElement('span');
+      percentageSpan.id = 'loading-percentage';
+      percentageSpan.classList.add('loading-percentage');
+      percentageSpan.textContent = '0%';
+      container.appendChild(percentageSpan);
+    }
+
+    // Function to get SMILES string from the editor
+    function getSmiles() {
+      const smilesContainer = document.getElementById('smiles-container');
+      const smilesOutput = document.getElementById('smiles-output');
+      const loadingBarContainer = document.getElementById('loading-bar-container');
+      const loadingPercentage = document.getElementById('loading-percentage');
+      const loadingCubes = loadingBarContainer.querySelectorAll('.loading-cube');
+
+      // Hide SMILES output and show loading bar
+      smilesContainer.style.display = 'none';
+      loadingBarContainer.style.display = 'flex'; // Use flex for cube layout
+      loadingPercentage.textContent = '0%';
+
+      // Reset all cubes to unfiiled state
+      loadingCubes.forEach(cube => cube.classList.remove('filled'));
+
+      let progress = 0;
+      const duration = 1500; // 1.5 seconds for the loading animation
+      const startTime = performance.now();
+
+      function animateLoading(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        progress = Math.min(100, (elapsedTime / duration) * 100);
+
+        loadingPercentage.textContent = `${Math.floor(progress)}%`;
+
+        // Fill cubes based on progress
+        const filledCubesCount = Math.floor((progress / 100) * NUM_CUBES);
+        for (let i = 0; i < NUM_CUBES; i++) {
+          if (i < filledCubesCount) {
+            loadingCubes[i].classList.add('filled');
+          } else {
+            loadingCubes[i].classList.remove('filled'); // Ensure cubes are unfilled if progress goes back (e.g., during rapid clicks)
+          }
+        }
+
+        if (progress < 100) {
+          requestAnimationFrame(animateLoading);
+        } else {
+          // Once loading is complete, reveal SMILES
+          const mol = editor.getChemObj();
+          if (mol) {
+            const smiles = Kekule.IO.saveFormatData(mol, 'smi');
+            smilesOutput.textContent = smiles;
+          } else {
+            smilesOutput.textContent = 'No molecule drawn yet. Please draw a structure to generate its SMILES.';
+          }
+
+          // Hide loading bar and show SMILES output after a short delay to appreciate 100%
+          setTimeout(() => {
+            loadingBarContainer.style.display = 'none';
+            smilesContainer.style.display = 'block';
+          }, 300); // Small delay
+        }
+      }
+      requestAnimationFrame(animateLoading);
+    }
+
+    // Function to clear the editor
+    function clearEditor() {
+      editor.setChemObj(new Kekule.StructureFragment()); // Set an empty fragment
+      document.getElementById('smiles-output').textContent = 'SMILES string will be displayed here upon generation.'; // Reset SMILES output
+      document.getElementById('smiles-container').style.display = 'block'; // Ensure SMILES container is visible
+      document.getElementById('loading-bar-container').style.display = 'none'; // Ensure loading bar is hidden
+      document.getElementById('loading-bar-container').querySelectorAll('.loading-cube').forEach(cube => cube.classList.remove('filled')); // Reset cubes
+    }
+
+    // --- Matrix Text Animation Effect for the title ---
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:',.<>/?";
+
+    function matrixEffect(el, finalText, delay = 25, iterations = 3) {
+      return new Promise(resolve => {
+        let frame = 0;
+        const interval = setInterval(() => {
+          el.textContent = finalText.split("").map((ch, i) => {
+              if (i > frame) return " ";
+              if (i < frame - iterations) return chars[Math.floor(Math.random() * chars.length)];
+              return ch; // Keep the character after it's "revealed"
+            }).join("");
+          frame++;
+          if (frame > finalText.length + iterations) {
+            clearInterval(interval);
+            el.textContent = finalText; // Ensure final text is set
+            resolve();
+          }
+        }, delay);
+      });
+    }
+
+    // Function to update live time for Zakho (UTC+3)
+    function updateZakhoTime() {
+      const now = new Date();
+      // Get UTC milliseconds and add 3 hours (3 * 60 * 60 * 1000 milliseconds)
+      const zakhoTime = new Date(now.getTime() + (3 * 60 * 60 * 1000) + now.getTimezoneOffset() * 60 * 1000);
+      const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      };
+      const formattedTime = zakhoTime.toLocaleDateString('en-GB', options);
+      document.getElementById('live-time').textContent = `Zakho kurdistan: ${formattedTime}`;
+    }
+
+    // Run the matrix effect on the title every 10 seconds and update time
+    window.onload = () => {
+      const sketcherTitle = document.getElementById("sketcher-title");
+      const originalTitleText = sketcherTitle.textContent;
+
+      // Initial run for matrix effect
+      matrixEffect(sketcherTitle, originalTitleText);
+
+      // Repeat matrix effect every 10 seconds
+      setInterval(() => {
+        matrixEffect(sketcherTitle, originalTitleText);
+      }, 10000); // 10 seconds
+
+      // Initial update for Zakho kurdistan
+      updateZakhoTime();
+      // Update Zakho time every second
+      setInterval(updateZakhoTime, 1000);
+
+      // Create loading cubes on load
+      createLoadingCubes();
+    };
+  </script>
+</body>
+</html>

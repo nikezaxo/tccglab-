@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Computational Chemistry Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+   <!-- Favicon -->
+  <link rel="icon" href="https://tccglab.com/logo.png" type="image/png" />
+
+  <!-- Logo Structured Data for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TCCG Lab",
+    "url": "https://tccglab.com",
+    "logo": "https://tccglab.com/logo.png"
+  }
+  </script>
+</head>
+<body>
+  <!-- Page Header -->
+  <header>
+    <h1 id="header-title">TCCG lab</h1>
+    <p id="location-text">computational chemistry based center</p>
+  </header>
+  
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#about">About Us</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#team">Team</a>
+    <a href="#pdb-viewer-section">3D Viewer</a>
+    <!-- New 2D Sketch button -->
+    <a href="2D skitch.html" class="sketch-button">2D Sketch</a>
+    <a href="#contact">Contact</a>
+    <a href="#location">Location</a>
+  </nav>
+  
+  <!-- Main Content Container -->
+  <div class="container">
+    <section id="about">
+      <h2 id="who-heading">WHO WE ARE</h2>
+      <p id="who-text">We are a specialized center with excellent scientific member at field at Zakho University focused on computational chemistry and molecular modeling. Our mission is to provide high-quality DFT, molecular dynamics, and cheminformatics solutions for academic and industrial partners.</p>
+    </section>
+    
+    <section id="services">
+      <h2 id="services-heading">Our Services</h2>
+      <ul>
+        <li id="srv1">Density Functional Theory (DFT) Calculations</li>
+        <li id="srv2">Molecular Dynamics Simulations</li>
+        <li id="srv3">Molecular docking</li>
+        <li id="srv4">Binding Free Energy Calculations</li>
+        <li id="srv5">Sorting data result, visualizing</li>
+      </ul>
+      <!-- The main "View All Pricing" button is moved outside this section -->
+    </section>
+
+    <!-- NEW PRICING BUTTON - Moved here as requested -->
+    <button class="view-pricing-button" data-target="pricing">View All Pricing</button>
+
+    <!-- NEW PRICING SECTION -->
+    <section id="pricing">
+      <h2>.........</h2>
+      <div class="pricing-table-container hidden">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Description</th>
+              <th>Price (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="price-dft">
+              <td>Density Functional Theory (DFT) Calculations</td>
+              <td>Detailed electronic structure and property calculations (optimization, frequency, minimization) Using gaussian 16 .</td>
+              <td>$25 - $50 per project (for one target molecule)</td>
+            </tr>
+            <tr id="price-md">
+              <td>Molecular Dynamics (MD) Simulations</td>
+              <td>Simulating including minimization , NPT, NVT, using Gromacs.</td>
+              <td>$50 per 100ns simulation </td>
+            </tr>
+            <tr id="price-docking">
+              <td>Molecular Docking</td>
+              <td>preparing protein and ligands using auto dock 4 Tools.</td>
+              <td>$10 per target protein</td>
+            </tr>
+            <tr id="price-binding">
+              <td>Binding Free Energy Calculations</td>
+              <td>Calculating the strength of interaction between ligand and protein, crucial for drug design , using vina .</td>
+              <td>$10</td>
+            </tr>
+            <tr id="price-sorting">
+              <td>Data Sorting and Visualization</td>
+              <td>for organizing, analyzing, and visualizing using pymol or Discovery studeo visualizer.</td>
+              <td>$10</td>
+            </tr>
+            <tr>
+              <td>Custom Project Consultation</td>
+              <td>Tailored solutions and in-depth consultation for unique computational chemistry challenges.</td>
+              <td>Contact for Quote</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="pricing-note">Prices are estimates and may may vary based on complexity like number of ligands to be prepared, project scope, and required computational resources. Please <a href="#contact">contact us</a> for a precise quote.</p>
+      </div>
+    </section>
+    
+    <section id="team">
+      <h2 id="team-heading">Our Team</h2>
+      <div class="team-container">
+        <div class="team-member">
+          <img src="hyder.jpeg" alt="Dr. Haydar A Mohammad-salim" onerror="this.onerror=null;this.src='https://placehold.co/250x250/222/00f7ff?text=Dr.+Hyder'"/>
+          <div class="team-member-info"><p class="member-name">Dr. Haydar A Mohammad-salim</p><p class="member-degree">Ph.D. in computational Chemistry</p></div>
+        </div>
+        <div class="team-member">
+          <img src="shinwar.jpeg" alt="Dr. Shinwar" onerror="this.onerror=null;this.src='https://placehold.co/250x250/222/00f7ff?text=Dr.+Shinwar'"/>
+          <div class="team-member-info"><p class="member-name">Dr. Shinwar A Idrees</p><p class="member-degree">Ph.D. in Physical chemistry</p></div>
+        </div>
+        <div class="team-member">
+          <img src="Dlzhar.png" alt="Mr. dilzhar S" onerror="this.onerror=null;this.src='https://placehold.co/250x250/222/00f7ff?text=Mr.+Dilzhar'"/>
+          <div class="team-member-info"><p class="member-name">Mr. dilzhar S Mohammed</p><p class="member-degree">M.Sc. in physical. Chem.</p></div>
+        </div>
+        <div class="team-member">
+          <img src="nihad.jpeg" alt="Dev . Nihad R" onerror="this.onerror=null;this.src='https://placehold.co/250x250/222/00f7ff?text=Dev.+Nihad'"/>
+           <div class="team-member-info"><p class="member-name">Dev. Nihad R</p><p class="member-degree">Research Assistant</p></div>
+        </div>
+        <div class="team-member">
+          <img src="ahmad.jpeg" alt="Ahmad KH" onerror="this.onerror=null;this.src='https://placehold.co/250x250/222/00f7ff?text=Ahmad+KH'"/>
+           <div class="team-member-info"><p class="member-name">Ahmad KH</p><p class="member-degree">Research Assistant</p></div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="innovation">
+      <h2>work flow/> </h2>
+      <div class="innovation-images-container" id="innovation-carousel">
+        <div class="innovation-image"><img src="idea.png" alt="Innovative Idea" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=Idea+GIF'"/></div>
+        <div class="innovation-image"><img src="idea1.gif" alt="Innovative Idea 1" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=Idea+1+GIF'"/></div>
+        <div class="innovation-image"><img src="idea2.png" alt="Innovative Idea 2" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=Idea+2+PNG'"/></div>
+        <div class="innovation-image"><img src="idea3.png" alt="Innovative Idea 3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=Idea+3+PNG'"/></div>
+        <div class="innovation-image"><img src="idea4.png" alt="Innovative Idea 4" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=Idea+4+PNG'"/></div>
+        <div class="innovation-image"><img src="DFT1.png" alt="DFT Workflow 1" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=DFT1+PNG'"/></div>
+        <div class="innovation-image"><img src="DFT.png" alt="DFT Workflow 2" onerror="this.onerror=null;this.src='https://placehold.co/300x200/00f7ff/000?text=DFT+PNG'"/></div>
+      </div>
+      <div class="matrix-text" id="matrix-effect" data-text="At TCCG, we specialize in advanced molecular dynamics simulations to unlock molecular mechanisms at the nanoscale. Our work accelerates drug discovery, protein-ligand binding analysis, and computational insight into complex biochemical systems. We empower clients with high-performance computing solutions tailored to real scientific challenges."></div>
+    </section>
+    
+    <!-- MERGED PDB VIEWER SECTION -->
+    <section id="pdb-viewer-section">
+        <div class="pdb-container">
+            <h1>access protein DATA</h1>
+            <p>Accessing molecular structures from the RCSB PDB database. Select visualization mode.</p>
+            <div class="input-group">
+                <input type="text" id="pdbIdInput" placeholder="Enter PDB ID (e.g., 1CRN, 4HHB)">
+                <button id="loadPdbButton">Load PDB // Execute</button>
+                <button id="resetViewButton">Reset View // Recalibrate</button>
+            </div>
+    
+            <div class="render-options">
+                <label class="render-option-item"><input type="radio" name="renderMode" value="line" checked> Line // ViewDefault</label>
+                <label class="render-option-item"><input type="radio" name="renderMode" value="ballAndStick"> Ball-and-Stick // Skeletal View</label>
+                <label class="render-option-item"><input type="radio" name="renderMode" value="spaceFilling"> Space-Filling // CPK Volume</label>
+                <label class="render-option-item"><input type="radio" name="renderMode" value="wireframe"> Wireframe // Mesh Outline</label>
+            </div>
+    
+            <div id="messageBox" class="hidden"></div>
+    
+            <div id="pdbInfoBox" class="info-box hidden">
+                <h2>PDB Data // Analysis Report</h2>
+                <p id="atomCountInfo"></p>
+                <p id="ligandCountInfo"></p>
+                <ul id="ligandList"></ul>
+            </div>
+        </div>
+    
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>Loading PDB data // Initiating Protocol...</p>
+        </div>
+    
+        <canvas id="pdb3dCanvas"></canvas>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us <span class="matrix-symbol" id="matrix-symbol">⠿</span></h2>
+      <p id="email-text" class="glow">Email: nihad.ali@staff.uoz.edu.krd</p>
+      <p id="phone-text" class="glow">Phone: +964 750 2015912</p>
+    </section>
+    
+    <section id="location">
+      <h2>meet us personally</h2>
+      <p>Zakho University, Zakho, Iraq</p>
+      <iframe class="map" src="https://maps.google.com/maps?q=Zakho%20University&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+    </section>
+  </div>
+  
+  <!-- Page Footer -->
+  <footer>
+    <div style="text-align: center; padding: 10px 0;">
+      <p>© 2025 Computational Chemistry Center, Zakho University. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chatbot Button and Modal -->
+  <div id="chat-icon" class="chat-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  </div>
+
+  <div id="chatbot-modal" class="chatbot-modal">
+      <div class="chatbot-modal-content">
+          <div class="chatbot-modal-header"><p>AI Assistant</p><span id="close-chatbot" class="close-chatbot">×</span></div>
+          <div class="chatbot-iframe-container">
+              <div id="chatbot-loading">Loading AI Assistant...</div>
+              <iframe src="https://www.chatbase.co/chatbot-iframe/7nAceRz4VtIakEojiLmW3" title="Chatbot" onload="document.getElementById('chatbot-loading').style.display='none';"></iframe>
+          </div>
+      </div>
+  </div>
+
+  <!-- Full Image Modal (Lightbox) -->
+  <div id="fullImageModal" class="full-image-modal">
+    <span class="close-full-image-modal">×</span>
+    <img class="full-image-modal-content" id="img01">
+  </div>
+
+  <!-- Scripts for PDB Viewer & Vanta -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  
+  <!-- Main page script -->
+  <script src="script.js"></script>
+</body>
+</html>
